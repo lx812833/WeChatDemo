@@ -1,4 +1,3 @@
-<!--pages/circle-progress.wxml-->
 <view class="canvasBox">
   <view class="bigCircle"></view>
   <view class="littleCircle"></view>

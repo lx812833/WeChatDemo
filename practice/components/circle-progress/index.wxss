@@ -1,4 +1,3 @@
-/* pages/circle-progress.wxss */
 .canvasBox {
   position: relative;
   height: 500rpx;

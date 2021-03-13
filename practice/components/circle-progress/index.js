@@ -1,4 +1,3 @@
-// pages/circle-progress.js
 Component({
   runTimerid: 0,
   // 属性定义
