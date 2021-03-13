@@ -1,0 +1,27 @@
+<!-- 块级标签 -->
+<view class="test" hover-class="test-1" style="width:{{ width }}rpx; height: {{ height }}rpx;">test</view>
+
+<text user-select decode space="ensp" bindtap="handleClick" data-title="点击" data-id="123">微信小 程序</text>
+
+<navigator url="/pages/logs/logs" open-type="redirect">日志</navigator>
+
+<scroll-view scroll-x scroll-with-animation>
+  <view class="scroll-container">
+    <view class="scroll-item">111</view>
+    <view class="scroll-item">222</view>
+    <view class="scroll-item">333</view>
+    <view class="scroll-item">444</view>
+    <view class="scroll-item">555</view>
+  </view>
+</scroll-view>
+
+<button open-type="contact">联系客服</button>
+
+<input type="text" class="input-item" />
+
+
+<!-- 圆环进度条 -->
+<circle-progress id="progress" percent="{{ percentValue }}" show-info />
+<button bindtap="drawProgress">redraw</button>
+
+<progress percent="20" show-info stroke-width="3"/>

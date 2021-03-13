@@ -1,0 +1,6 @@
+<!--pages/circle-progress.wxml-->
+<view class="canvasBox">
+  <view class="bigCircle"></view>
+  <view class="littleCircle"></view>
+  <canvas class="canvas" canvas-id="runCircle" id="runCircle"></canvas>
+</view>

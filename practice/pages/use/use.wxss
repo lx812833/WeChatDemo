@@ -1,0 +1,38 @@
+/* pages/use/use.wxss */
+.test {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100rpx;
+  height: 100rpx;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  background: red;
+}
+
+.test-1 {
+  background: pink;
+}
+
+.scroll-container {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.scroll-item {
+  width: 200rpx;
+  height: 100rpx;
+  flex: 0 0 200rpx;
+  margin-right: 10rpx;
+  background: yellowgreen;
+}
+
+.scroll-item:last-child {
+  margin-right: 0;
+}
+
+.input-item {
+  border: 1rpx solid #CCC;
+  padding: 0 5rpx;
+}
