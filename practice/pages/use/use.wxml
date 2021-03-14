@@ -25,3 +25,6 @@
 <button bindtap="drawProgress">redraw</button>
 
 <progress percent="20" show-info stroke-width="3"/>
+
+<icon class="iconfont icon-turnip"></icon>
+<icon class="iconfont icon-leek"></icon>

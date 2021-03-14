@@ -14,3 +14,27 @@
   color: red;
   margin-left: 5px;
 }
+
+@font-face {
+  font-family: 'iconfont';
+  /* project id 638417 */
+  src: url('//at.alicdn.com/t/font_638417_yh8kudpkmpk.eot');
+  src: url('//at.alicdn.com/t/font_638417_yh8kudpkmpk.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_638417_yh8kudpkmpk.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_638417_yh8kudpkmpk.woff') format('woff'),
+    url('//at.alicdn.com/t/font_638417_yh8kudpkmpk.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_638417_yh8kudpkmpk.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: 'iconfont';
+  font-size: 40rpx;
+}
+.icon-turnip::before {
+  content: '\e63e';
+  color: green;
+}
+.icon-leek::before {
+  content: '\e63f';
+  color: red;
+}
