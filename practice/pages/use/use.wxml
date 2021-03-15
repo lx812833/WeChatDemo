@@ -23,8 +23,11 @@
 <!-- 圆环进度条 -->
 <circle-progress id="progress" percent="{{ percentValue }}" show-info />
 <button bindtap="drawProgress">redraw</button>
+<progress percent="20" show-info stroke-width="3" />
 
-<progress percent="20" show-info stroke-width="3"/>
-
+<!-- iconfont图标 -->
 <icon class="iconfont icon-turnip"></icon>
 <icon class="iconfont icon-leek"></icon>
+
+<!-- rich-text -->
+<rich-text space="emsp" nodes="{{ nodes }}" bindtap="handleTapRichText"></rich-text>

@@ -3,7 +3,59 @@ Page({
   data: {
     width: 100,
     height: 100,
-    percentValue: 15
+    percentValue: 15,
+    nodes: [{
+      name: 'div',
+      attrs: {
+        class: 'div_class',
+        style: 'line-height: 20px;padding:20px;'
+      },
+      children: [
+        {
+          type: 'text',
+          text: '中文Hello&nbsp;World!'
+        },
+        {
+          name: 'span',
+          attrs: {
+            style: 'color: green;'
+          },
+          children: [{
+            type: 'text',
+            text: 'message'
+          }]
+        },
+        {
+          name: 'br',
+        },
+        {
+          name: 'br',
+        },
+        {
+          name: 'img',
+          attrs: {
+            src: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=111713540,615806613&fm=26&gp=0.jpg',
+            // style:'width:100%;'
+            style: 'width: 100%; font-size: 0; display: block'  // 去除图片间的间隙
+          }
+        },
+        {
+          name: 'img',
+          attrs: {
+            src: 'https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3363295869,2467511306&fm=26&gp=0.jpg',
+            style: 'width:100%;',
+            class: 'img'
+          }
+        },
+        {
+          name: 'img',
+          attrs: {
+            src: 'https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2853553659,1775735885&fm=26&gp=0.jpg',
+            style: 'width:100%;'
+          }
+        }]
+    }],
+    urls: [], // nodes中图片节点
   },
   // 7环形进度条
   drawProgress() {
@@ -16,7 +68,7 @@ Page({
       percentValue: this.data.percentValue + 10
     })
   },
-  
+
   handleClick({ currentTarget }) {
     this.setData({
       width: 200,
@@ -45,6 +97,24 @@ Page({
    */
   onReady: function () {
     console.log("监听页面初次渲染完成");
+    function findImageUrl(nodes) {
+      let urls = []
+      nodes.forEach(item => {
+        if (item.attrs) {
+          for (const key in item.attrs) {
+            if (key === 'src') {
+              urls.push(item.attrs[key])
+            }
+          }
+        }
+        if (item.children) {
+          urls = urls.concat(findImageUrl(item.children))
+        }
+      })
+      return urls
+    }
+    this.data.urls = findImageUrl(this.data.nodes)
+    console.log("this.data.urls", this.data.urls)
   },
   /**
    * 生命周期函数--监听页面显示
@@ -81,5 +151,16 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+  },
+
+  /**
+   * rich-text点击事件
+   */
+  handleTapRichText(e) {
+    let urls = this.data.urls
+    wx.previewImage({
+      current: urls[0],
+      urls: urls
+    })
   }
 })
