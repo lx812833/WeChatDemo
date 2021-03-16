@@ -1,6 +1,7 @@
-<!--logs.wxml-->
-<view class="container log-list">
-  <block wx:for="{{logs}}" wx:for-item="log" wx:key="key">
-    <text class="log-item">{{index + 1}}. {{log}}</text>
-  </block>
+<view class="section">
+  <!-- 生成分享图，将view转绘为图片 -->
+  <button type="primary" class="intro" open-type="getUserInfo" bindgetuserinfo="getUserInfo"
+    wx:if="{{!nickName}}">获取分享图头像昵称</button>
+  <button type="primary" class="intro" bindtap="createShareImage" wx:else>点我生成分享图</button>
+  <share-box isCanDraw="{{isCanDraw}}" bind:initData="createShareImage" />
 </view>

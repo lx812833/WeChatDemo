@@ -1,15 +1,32 @@
-// logs.js
-const util = require('../../utils/util.js')
+const app = getApp()
 
 Page({
   data: {
-    logs: []
+    nickName: '',
+    avatarUrl: '',
+    isCanDraw: false
   },
   onLoad() {
     this.setData({
-      logs: (wx.getStorageSync('logs') || []).map(log => {
-        return util.formatTime(new Date(log))
-      })
+      nickName: wx.getStorageSync('nickName') || '',
+      avatarUrl: wx.getStorageSync('avatarUrl') || ''
     })
+  },
+  // 获取用户信息
+  getUserInfo(e) {
+    this.setData({
+      nickName: e.detail.userInfo.nickName,
+      avatarUrl: e.detail.userInfo.avatarUrl
+    })
+    wx.setStorageSync('avatarUrl', e.detail.userInfo.avatarUrl)
+    wx.setStorageSync('nickName', e.detail.userInfo.nickName)
+  },
+  createShareImage() {
+    this.setData({
+      isCanDraw: !this.data.isCanDraw
+    })
+  },
+  onTap(e) {
+    console.log(e.target)
   }
 })

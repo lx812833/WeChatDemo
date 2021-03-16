@@ -31,3 +31,20 @@
 
 <!-- rich-text -->
 <rich-text space="emsp" nodes="{{ nodes }}" bindtap="handleTapRichText"></rich-text>
+
+<!-- 距形按钮 -->
+<view class="section">
+  <button type="default" class="btn" plain hover-class="rect-btn__hover_btn">
+    <icon type="success_no_circle" size="26px"></icon>完成
+  </button>
+</view>
+<!-- 圆形按钮 -->
+<view class="section">
+  <button hover-class="circle-btn__hover_btn">
+    <icon type="success" size="80px"></icon>
+  </button>
+</view>
+<!-- 普通按钮 -->
+<view class="section">
+  <button hover-class="rect-btn__hover_btn" type="primary">完成</button>
+</view>
