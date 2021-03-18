@@ -5,3 +5,15 @@
   <button type="primary" class="intro" bindtap="createShareImage" wx:else>点我生成分享图</button>
   <share-box isCanDraw="{{isCanDraw}}" bind:initData="createShareImage" />
 </view>
+
+<button type="primary" bindtap="handleShowDialog">弹窗</button>
+<mp-dialog title="test" show="{{showDialog}}" bindbuttontap="tapDialogButton"
+  buttons="{{[{text: '取消'}, {text: '确认'}]}}">
+  <view>test content</view>
+</mp-dialog>
+
+<view class="weui-cells">
+  <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
+    <mp-cell value="左滑可以删除" footer="说明文字"></mp-cell>
+  </mp-slideview>
+</view>
