@@ -1,54 +1,137 @@
-// index.js
-// 获取应用实例
 const app = getApp()
+let viewId = 5
+const createRecycleContext = require('miniprogram-recycle-view')
+function rpx2px(rpx) {
+  return (rpx / 750) * wx.getSystemInfoSync().windowWidth
+}
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    arr: [],
+    triggered: false,
+    scrollTopValue:0,
+    scrollIntoViewId:'',
+    pullingMessage:'下拉刷新',//下拉刷新,释放更新,加新中...
+    refresherTriggered:false,//
+    tabs:[]
   },
-  // 事件处理函数
-  bindViewTap() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad() {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
+willCompleteRefresh(){
+  console.log('更新中')
+  let intervalId = setInterval(()=>{
+    let pullingMessage = this.data.pullingMessage
+    console.log(pullingMessage,pullingMessage == '更新中')
+    if (pullingMessage.length < 7){
+      pullingMessage += '.'
+    }else{
+      pullingMessage = '更新中'
     }
-  },
-  getUserInfo(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      pullingMessage
     })
+  },500)
+  setTimeout(()=>{
+    console.log('更新完成了')
+    clearInterval(intervalId)
+    this.setData({
+      pullingMessage:"已刷新",
+      refresherTriggered:false,
+    })
+  },2000)
+},
+  unshiftOnePic(){
+    let arr = this.data.arr
+    arr.unshift(arr.length+1)
+    this.setData({
+      arr
+    })
+  },
+  scrollToView1(){
+    viewId += 2
+    this.setData({
+      scrollIntoViewId:'childview'+viewId
+    })
+    console.log(this.data.scrollIntoViewId)
+  },
+  
+  onReady: function () {
+var ctx = createRecycleContext({
+  id: 'recycleId',
+  dataKey: 'recycleList',
+  page: this,
+  itemSize: {
+    width: rpx2px(650),
+    height: rpx2px(100)
   }
 })
+let newList = []
+for (let i = 0; i < 20; i++) {
+  newList.push({
+    id: i,
+    name: `标题${i + 1}`
+  })
+}
+ctx.append(newList)
+
+    // 
+    const arr = []
+    for (let i = 0; i < 20; i++) arr.push(i)
+    this.setData({
+      arr
+    })
+
+    setTimeout(() => {
+      this.setData({
+        triggered: true,
+      })
+    }, 1000)
+    // 
+    let activeTab = 0, page=1, res = {something:''}
+    let tabsData = this.data.tabs[activeTab] || {list:[]}
+    tabsData.page = page+1
+    tabsData.list.push(res)
+    let key = `tabs[${activeTab}]`
+    this.setData({
+      [key]: tabsData
+    })
+    console.log(this.data.tabs)
+  },
+
+  onPulling(e) {
+    console.log('onPulling:', e)
+  },
+
+  onRefresh() {
+    if (this._freshing) return
+    this._freshing = true
+    setTimeout(() => {
+      this.setData({
+        triggered: false,
+      })
+      this._freshing = false
+    }, 3000)
+  },
+
+  onRestore(e) {
+    console.log('onRestore:', e)
+  },
+
+  onAbort(e) {
+    console.log('onAbort', e)
+  },
+  onScroll(e){
+    console.log(e.detail.scrollTop, e.detail.scrollLeft, e.detail.scrollHeight,e.detail.scrollWidth)
+  },
+  onScrolltoupper(e){
+    console.log('已达顶部后，小于50，是一种状态')
+  },
+  plusScrollUpValue(){
+    this.setData({
+      scrollTopValue:this.data.scrollTopValue+50
+    })
+  },
+  viewScrollToUpperEvent(e){
+    console.log('测试scrolltoupper事件',e.detail);
+    
+  }
+})
+
