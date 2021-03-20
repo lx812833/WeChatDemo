@@ -1,0 +1,5 @@
+<view class="q-pp-mask ptp_exposure {{ visible ? 'q-pp-mask-show' : '' }}" bindtap="handleClickMask">
+  <view class=" q-pp {{ visible ? 'q-pp-show' : '' }}">
+    <slot name="content" data-type="unclose"></slot>
+  </view>
+</view>

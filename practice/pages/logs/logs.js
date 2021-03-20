@@ -5,7 +5,8 @@ Page({
     nickName: '',
     avatarUrl: '',
     isCanDraw: false,
-    showDialog: false
+    showDialog: false,
+    visible: false
   },
   onLoad() {
     this.setData({
@@ -59,5 +60,27 @@ Page({
   },
   slideButtonTap(e) {
     console.log('slide button tap', e.detail)
+    this.setData({
+      visible: true
+    })
+  },
+  // 弹出框初始化
+  handlePopUpReady() {
+    console.log("弹出框初始化")
+  },
+  // 弹出框关闭
+  handleClosePopUp() {
+    console.log("弹出框关闭")
+  },
+  // 底部弹出框
+  handleCancel() {
+    this.setData({
+      visible: false
+    })
+  },
+  handleSure() {
+    this.setData({
+      visible: false
+    })
   }
 })

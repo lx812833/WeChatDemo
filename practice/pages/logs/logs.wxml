@@ -17,3 +17,14 @@
     <mp-cell value="左滑可以删除" footer="说明文字"></mp-cell>
   </mp-slideview>
 </view>
+
+
+<!-- 底部弹出遮罩框 -->
+<pop-up visible="{{visible}}" onClose="handleClosePopUp" bindready="handlePopUpReady">
+  <view class="picker-view" slot="content">
+    <view class="picker-view__pane">
+      <text catchtap="handleCancel">取消</text>
+      <text catchtap="handleSure">确定</text>
+    </view>
+  </view>
+</pop-up>
