@@ -1,3 +1,18 @@
+<!-- 自定义导航栏 -->
+<navigation-bar ext-class="page-navigator-bar" active="{{active}}" loading="{{loading}}">
+  <view class="left" slot="left">
+    <icon bindtap="goBack" class="iconfont icon-back"></icon>
+    <icon bindtap="goHome" class="iconfont icon-home"></icon>
+  </view>
+  <view slot="center">
+    <view>自定义导航标题</view>
+  </view>
+</navigation-bar>
+
+<view style="width:100%;height:400px;">
+</view>
+<image class="top-banner" src="https://qiniu-image.qtshe.com/1557133211411_684.jpg" mode="widthFix" />
+
 <view class="section">
   <!-- 生成分享图，将view转绘为图片 -->
   <button type="primary" class="intro" open-type="getUserInfo" bindgetuserinfo="getUserInfo"

@@ -5,6 +5,8 @@
     "mp-dialog": "weui-miniprogram/dialog/dialog",
     "mp-cells": "weui-miniprogram/cells/cells",
     "mp-cell": "weui-miniprogram/cell/cell",
-    "mp-slideview": "weui-miniprogram/slideview/slideview"
-  }
+    "mp-slideview": "weui-miniprogram/slideview/slideview",
+    "navigation-bar": "/components/navigationBar/index"
+  },
+  "navigationStyle": "custom"
 }

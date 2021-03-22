@@ -1,0 +1,15 @@
+<view class="weui-navigation-bar {{ext-class}}" bindtouchstart="doubleClick">
+  <view
+    class="weui-navigation-bar__inner {{active ? 'navigator-active' : 'navigator-normal'}} {{ios ? 'ios' : 'android'}}"
+    style="padding-top: {{statusBarHeight}}px;{{innerPaddingRight}};{{innerWidth}};">
+    <view class="weui-navigation-bar__left" style="{{leftWidth}}">
+      <slot name="left"></slot>
+    </view>
+    <view class="weui-navigation-bar__center">
+      <view wx:if="{{loading}}" class="weui-navigation-bar__loading"></view>
+      <block wx:if="{{active}}">
+        <slot name="center"></slot>
+      </block>
+    </view>
+  </view>
+</view>

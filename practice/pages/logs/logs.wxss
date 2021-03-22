@@ -1,3 +1,20 @@
+page {
+  background-color: aliceblue;
+}
+
+.top-banner {
+  width: 100%;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.section {
+  margin: 150rpx auto;
+}
+
 .picker-view {
   position: relative;
   display: flex;
@@ -27,4 +44,35 @@
 .picker-view__pane text {
   color: #00cc88;
   font-size: 30rpx;
+}
+
+/* 自定义导航栏 */
+.page-navigator-bar .navigator-normal .icon-back {
+  color: white;
+}
+
+.page-navigator-bar .navigator-normal .icon-home {
+  color: white;
+}
+
+.page-navigator-bar .navigator-active .icon-back {
+  color: black;
+}
+
+.page-navigator-bar .navigator-active .icon-home {
+  color: black;
+}
+
+.icon-back::after {
+  content: '\e6bd';
+  font-size: 22px;
+}
+
+.icon-home::after {
+  content: '\ee60';
+  font-size: 22px;
+}
+
+.left icon:last-child {
+  padding-left: 20rpx;
 }

@@ -1,0 +1,141 @@
+/* 微信小程序wxss中使用var变量 */
+page {
+  --height: 44px;
+  --right: 190rpx;
+}
+
+.weui-navigation-bar {
+  overflow: hidden
+}
+
+/* 
+ios、android两个平台导航栏的高度不一样
+ios 44px
+android 48px
+ */
+.weui-navigation-bar .android {
+  --height: 48px;
+  --right: 222rpx
+}
+
+.weui-navigation-bar__placeholder {
+  height: var(--height);
+  background: #F8F8F8;
+  position: relative;
+  z-index: 50
+}
+
+
+.weui-navigation-bar__inner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5001;
+  height: var(--height);
+  display: flex;
+  align-items: center;
+  padding-right: var(--right);
+  width: calc(100% - var(--right))
+}
+
+.weui-navigation-bar__inner.navigation-bar-border {
+  /* border-bottom: 2rpx solid #ddd; */
+}
+
+.weui-navigation-bar__inner .weui-navigation-bar__left {
+  position: relative;
+  width: var(--right);
+  padding-left: 15px;
+  box-sizing: border-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  -webkit-box-pack: center;
+}
+
+.weui-navigation-bar__inner .weui-navigation-bar__left .btn-back {
+  width: 12px;
+  height: 24px;
+}
+
+.weui-navigation-bar__inner .weui-navigation-bar__left .btn-back image {
+  width: 100%;
+  height: 100%;
+}
+
+.weui-navigation-bar__left .btn-home {
+  width: 20px;
+  height: 20px;
+}
+
+.weui-navigation-bar__left .btn-back+.btn-home {
+  margin-left: 50rpx;
+}
+
+.weui-navigation-bar__left .btn-home image {
+  width: 100%;
+  height: 100%;
+}
+
+.weui-navigation-bar__inner .weui-navigation-bar__left .weui-navigation-bar__btn_goback:active {
+  opacity: .5
+}
+
+
+.weui-navigation-bar__inner .weui-navigation-bar__center {
+  font-size: 17px;
+  text-align: center;
+  position: relative;
+  flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.weui-navigation-bar__center text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: -2px;
+}
+
+.weui-navigation-bar__inner .weui-navigation-bar__loading {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  content: " ";
+  animation: loading-animate 1s steps(12, end) infinite;
+  background: transparent url(https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3225163326,3627210682&fm=26&gp=0.jpg) no-repeat;
+  background-size: 100%;
+}
+
+@keyframes loading-animate {
+  0% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+/* 激活显示的状态, 非透明，有背景色 */
+.navigator-active {
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  background: #FFF;
+  color: #3c3c3c;
+}
+
+.navigator-normal {
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+  background: transparent;
+  color: white;
+}

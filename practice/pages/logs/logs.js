@@ -6,7 +6,9 @@ Page({
     avatarUrl: '',
     isCanDraw: false,
     showDialog: false,
-    visible: false
+    visible: false,
+    loading: false,
+    active: true
   },
   onLoad() {
     this.setData({
@@ -82,5 +84,29 @@ Page({
     this.setData({
       visible: false
     })
+  },
+  //点击back事件处理
+  goBack() {
+    this.triggerEvent("back")
+  },
+  // 返回首页
+  goHome() {
+    wx.reLaunch({
+      url: "/pages/index/index"
+    })
+  },
+  // 页面滚动触发事件的处理函数
+  onPageScroll(res) {
+    if (res.scrollTop > 50) {
+      if (!this.data.active) {
+        this.setData({
+          active: true
+        })
+      }
+    } else if (this.data.active) {
+      this.setData({
+        active: false
+      })
+    }
   }
 })
