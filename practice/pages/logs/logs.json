@@ -2,6 +2,7 @@
   "usingComponents": {
     "share-box": "/components/shareBox/index",
     "pop-up": "/components/popUp/index",
+    "mina-lazy-image": "/components/minaLazyImage/index",
     "mp-dialog": "weui-miniprogram/dialog/dialog",
     "mp-cells": "weui-miniprogram/cells/cells",
     "mp-cell": "weui-miniprogram/cell/cell",
