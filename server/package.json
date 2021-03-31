@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "koa": "^2.13.1",
+    "koa-logger": "^3.2.1",
+    "moment": "^2.29.1",
     "nodemon": "^2.0.7"
   }
 }
