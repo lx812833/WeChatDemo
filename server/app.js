@@ -4,25 +4,29 @@ const session = require("koa-session")
 const store = require("koa-session-local")
 
 const app = new koa()
+
+// 导入路由
+const router = require("./routes")
+
 app.use(logger())
 
 // 打印请求日志
 app.use(async (ctx, next) => {
-    await next();
-    const rt = ctx.response.get("X-Response-Time");
-    console.log(`${ctx.method} ${ctx.url} - ${rt}`);
-});
+    await next()
+    const rt = ctx.response.get("X-Response-Time")
+    console.log(`${ctx.method} ${ctx.url} - ${rt}`)
+})
 
 // x-response-time
 app.use(async (ctx, next) => {
-    const start = Date.now();
-    await next();
-    const ms = Date.now() - start;
-    ctx.set("X-Response-Time", `${ms}ms`);
-});
+    const start = Date.now()
+    await next()
+    const ms = Date.now() - start
+    ctx.set("X-Response-Time", `${ms}ms`)
+})
 
 // 设置签名的 Cookie 密钥
-app.keys = ["koakeys"];
+app.keys = ["koakeys"]
 // signed = false 时，app.keys 不赋值没有关系；
 // 如果 signed: true 时，则需要对 app.keys 赋值，否则会报错。
 
@@ -41,16 +45,18 @@ const CONFIG = {
 };
 // Error: Cannot send secure cookie over unencrypted connection
 // 将 secure 改为false，在本地测试
-app.use(session(CONFIG, app));
+app.use(session(CONFIG, app))
 
 // cookie
 app.use(async function (ctx, next) {
-    const n = ~~ctx.cookies.get("view") + 1;
+    const n = ~~ctx.cookies.get("view") + 1
     // cookie中设置了HttpOnly属性,那么通过js脚本将无法读取到cookie信息
-    ctx.cookies.set("view", n, { httpOnly: false });
-    ctx.body = "cookie"
-    await next();
-});
+    ctx.cookies.set("view", n, { httpOnly: false })
+    await next()
+})
+
+// 路由 批量读取并注册
+router(app)
 
 app.listen(3000, () => {
     console.log(`[Server] starting at port 3000`)
