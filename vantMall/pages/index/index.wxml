@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 最多显示两行 -->
+  <view class="van-multi-ellipsis--l2">
+    这是一段最多显示两行的文字，后面的内容会省略这是一段最多显示两行的文字，后面的内容会省略
+  </view>
+  <!-- 上边框 -->
+  <view class="van-hairline--top">...............................1</view>
+
+  <van-button type="default">默认按钮</van-button>
+  <van-button type="primary">主要按钮</van-button>
+  <van-button type="info">信息按钮</van-button>
+  <van-button type="warning">警告按钮</van-button>
+  <van-button type="danger">危险按钮</van-button>
+
+  <!-- 下边框 -->
+  <view class="van-hairline--bottom"></view>
+
+</view>
