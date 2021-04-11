@@ -9,6 +9,7 @@ Page({
       this.setData({
         canIUseGetUserProfile: true
       })
+
     }
   },
   getUserProfile(e) {
@@ -21,30 +22,26 @@ Page({
           userInfo,
           hasUserInfo: true
         })
-        this.handleUserLogin(encryptedData, iv)
-      }
-    })
-  },
-  // 授权登陆
-  handleUserLogin(encryptedData, iv) {
-    wx.login({
-      success(res) {
-        if (res.code) {
-          wx.request({
-            url: 'http://localhost:3000/users/login',
-            method: 'POST',
-            header: {
-              'content-type': 'application/json'
-            },
-            data: {
-              code: res.code,
-              encryptedData,
-              iv
+        wx.login({
+          success(res) {
+            if (res.code) {
+              wx.request({
+                url: 'http://localhost:3000/users/login',
+                method: 'POST',
+                header: {
+                  'content-type': 'application/json'
+                },
+                data: {
+                  code: res.code,
+                  encryptedData,
+                  iv
+                }
+              })
+            } else {
+              console.log('登录失败！' + res.errMsg)
             }
-          })
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }
+          }
+        })
       }
     })
   },
