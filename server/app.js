@@ -2,6 +2,7 @@ const koa = require("koa")
 const logger = require("koa-logger")
 const session = require("koa-session")
 const store = require("koa-session-local")
+const koaBody = require("koa-body")
 
 const app = new koa()
 
@@ -9,6 +10,7 @@ const app = new koa()
 const router = require("./routes")
 
 app.use(logger())
+app.use(koaBody())
 
 // 打印请求日志
 app.use(async (ctx, next) => {

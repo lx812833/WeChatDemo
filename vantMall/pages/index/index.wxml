@@ -1,19 +1,18 @@
-<!--index.wxml-->
+<!-- <view class="container">
+  <button bindgetuserinfo="bindGetUserInfo" open-type="getUserInfo" type="primary">授权登录</button>
+
+  <van-popup show="{{ isShow }}" position="bottom" closeable close-on-click-overlay="{{ !isShow }}"
+    close-icon-position="top-left" custom-style="height: 40%;" bind:close="handleClosePopup" />
+</view> -->
+
 <view class="container">
-  <!-- 最多显示两行 -->
-  <view class="van-multi-ellipsis--l2">
-    这是一段最多显示两行的文字，后面的内容会省略这是一段最多显示两行的文字，后面的内容会省略
+  <view class="userinfo">
+    <block wx:if="{{!hasUserInfo}}">
+      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+    </block>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
   </view>
-  <!-- 上边框 -->
-  <view class="van-hairline--top">...............................1</view>
-
-  <van-button type="default">默认按钮</van-button>
-  <van-button type="primary">主要按钮</van-button>
-  <van-button type="info">信息按钮</van-button>
-  <van-button type="warning">警告按钮</van-button>
-  <van-button type="danger">危险按钮</van-button>
-
-  <!-- 下边框 -->
-  <view class="van-hairline--bottom"></view>
-
 </view>
