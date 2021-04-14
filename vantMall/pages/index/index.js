@@ -22,25 +22,32 @@ Page({
           userInfo,
           hasUserInfo: true
         })
-        wx.login({
-          success(res) {
-            if (res.code) {
-              wx.request({
-                url: 'http://localhost:3000/users/login',
-                method: 'POST',
-                header: {
-                  'content-type': 'application/json'
-                },
-                data: {
-                  code: res.code,
-                  encryptedData,
-                  iv
-                }
-              })
-            } else {
-              console.log('登录失败！' + res.errMsg)
+        this.handleUserLogin(encryptedData, iv)
+      }
+    })
+  },
+  // 用户登录
+  handleUserLogin(encryptedData, iv) {
+    wx.login({
+      success: res => {
+        wx.request({
+          url: 'http://localhost:3000/users/login',
+          method: 'POST',
+          header: {
+            'content-type': 'application/json'
+          },
+          data: {
+            code: res.code,
+            encryptedData,
+            iv
+          },
+          success: user => {
+            if (user.statusCode === 200 && user.data) {
+              const { authorizationToken } = user.data.data
+              getApp().globalData.token = authorizationToken
+              getApp().globalData.userInfo = user.data.data
+              console.log("登录成功", user.data.data)
             }
-            console.log("登录成功", res)
           }
         })
       }
