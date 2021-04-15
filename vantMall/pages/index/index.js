@@ -9,8 +9,21 @@ Page({
       this.setData({
         canIUseGetUserProfile: true
       })
-
     }
+    wx.checkSession({
+      success: res => {
+        let token = wx.getStorageSync('token')
+        let userInfo = wx.getStorageSync('userInfo')
+        if(token) {
+          this.setData({
+            hasUserInfo: true,
+            userInfo
+          })
+          getApp().globalData.token = token
+          getApp().globalData.userInfo = userInfo
+        }
+      },
+    })
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
@@ -44,9 +57,10 @@ Page({
           success: user => {
             if (user.statusCode === 200 && user.data) {
               const { authorizationToken } = user.data.data
+              wx.setStorageSync('token', authorizationToken)
+              wx.setStorageSync('userInfo', user.data.data)
               getApp().globalData.token = authorizationToken
               getApp().globalData.userInfo = user.data.data
-              console.log("登录成功", user.data.data)
             }
           }
         })
