@@ -13,11 +13,11 @@ const app = new koa()
 const router = require("./routes")
 
 // 连接数据库
-// const { connect, initModels } = require("./database/init");
-// ; (async () => {
-//     await connect()
-//     initModels()
-// })()
+const { connect, initModels } = require("./database/init");
+; (async () => {
+    await connect()
+    initModels()
+})()
 
 app.use(logger())
 app.use(koaBody())

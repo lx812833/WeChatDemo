@@ -14,8 +14,8 @@ class UserControl {
         const { code, encryptedData, iv, sessionKeyIsValid } = ctx.request.body
         const weixinAuth = new WeixinAuth(minProgram.appId, minProgram.appSecret)
         const token = await weixinAuth.getAccessToken(code)
-        const sessionKey = token.data.session_key
-        const pc = new WXBizDataCrypt(minProgram.appId, sessionKey)
+        const { session_key, openid } = token.data
+        const pc = new WXBizDataCrypt(minProgram.appId, session_key)
 
         let decryptedUserInfo = pc.decryptData(encryptedData, iv)
 
@@ -24,19 +24,21 @@ class UserControl {
             jwtSecret,
             { expiresIn: '1d' }
         )
-        Object.assign(decryptedUserInfo, { authorizationToken })
-        console.log("decryptedUserInfo", decryptedUserInfo, decryptedUserInfo.openId)
+        Object.assign(decryptedUserInfo, {
+            authorizationToken,
+            openId: openid
+        })
 
         // 查询当前登录用户是否创建，否则创建
-        // let user = await User.findOne({ where: { openId: decryptedUserInfo.openId } })
-        // console.log("user", user)
-        // if (!user) {
-        //     let createUser = await User.create(decryptedUserInfo)
-        //     console.log("createRes", createUser)
-        //     if (createUser) {
-        //         user = createUser.dataValues
-        //     }
-        // }
+        let user = await User.findOne({ where: { openId: decryptedUserInfo.openId } })
+        console.log("user", user)
+        if (!user) {
+            let createUser = await User.create(decryptedUserInfo)
+            console.log("createRes", createUser)
+            // if (createUser) {
+            //     user = createUser.dataValues
+            // }
+        }
         ctx.status = 200
         ctx.body = {
             code: 200,

@@ -26,7 +26,7 @@ module.exports = User.init({
     language: {
         type: Sequelize.STRING(10)
     },
-    city2: {
+    city: {
         type: Sequelize.STRING(20)
     },
     province: {
