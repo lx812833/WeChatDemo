@@ -3,6 +3,9 @@ const logger = require("koa-logger")
 const session = require("koa-session")
 const store = require("koa-session-local")
 const koaBody = require("koa-body")
+const jsonwebtoken = require("jsonwebtoken")
+const koajwt = require("koa-jwt")
+const { jwtSecret } = require("./config")
 
 const app = new koa()
 
@@ -10,11 +13,11 @@ const app = new koa()
 const router = require("./routes")
 
 // 连接数据库
-const { connect, initModels } = require("./database/init");
-; (async () => {
-    await connect()
-    initModels()
-})()
+// const { connect, initModels } = require("./database/init");
+// ; (async () => {
+//     await connect()
+//     initModels()
+// })()
 
 app.use(logger())
 app.use(koaBody())
@@ -40,7 +43,7 @@ app.keys = ["koakeys"]
 // 如果 signed: true 时，则需要对 app.keys 赋值，否则会报错。
 
 const CONFIG = {
-    store: new store(),
+    store: new store(), //  将session存储到服务器端的内存里
     key: "koa.sess",    //  cookie的key。 (默认是 koa:sess) 
     maxAge: 86400000,   //  cookie有效时长
     autoCommit: true,   //  自动提交到响应头。(默认是 true)
@@ -57,15 +60,41 @@ const CONFIG = {
 app.use(session(CONFIG, app))
 
 // cookie
-app.use(async function (ctx, next) {
-    const n = ~~ctx.cookies.get("view") + 1
-    // cookie中设置了HttpOnly属性,那么通过js脚本将无法读取到cookie信息
-    ctx.cookies.set("view", n, { httpOnly: false })
-    await next()
-})
+// app.use(async function (ctx, next) {
+//     const n = ~~ctx.cookies.get("view") + 1
+//     // cookie中设置了HttpOnly属性,那么通过js脚本将无法读取到cookie信息
+//     ctx.cookies.set("view", n, { httpOnly: false })
+//     await next()
+// })
+
+// session
+// app.use(async (ctx) => {
+//     let n = ~~ctx.session.views;
+//     ctx.session.views = n;
+//     ctx.body = 'views' + n;
+// })
 
 // 路由 批量读取并注册
 router(app)
+
+// 路由鉴权 以及验证token是否有效
+app.use(async (ctx, next) => {
+    try {
+        await next()
+    } catch (error) {
+        if (error.status === 401) {
+            ctx.status = 401
+            ctx.body = "Protected resource"
+        } else {
+            throw error
+        }
+    }
+})
+
+// 若验证未通过，则404
+app.use(koajwt({ secret: jwtSecret }).unless({
+    path: ['/users/login']
+}))
 
 app.listen(3000, () => {
     console.log(`[Server] starting at port 3000`)
