@@ -16,7 +16,8 @@ Page({
         let userInfo = wx.getStorageSync('userInfo')
         if(token) {
           this.setData({
-            hasUserInfo: true,
+            // hasUserInfo: true,
+            hasUserInfo: false,
             userInfo
           })
           getApp().globalData.token = token
@@ -47,12 +48,14 @@ Page({
           url: 'http://localhost:3000/users/login',
           method: 'POST',
           header: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            // 'Authorization': `Bearer ${token || ''}`
           },
           data: {
             code: res.code,
             encryptedData,
-            iv
+            iv,
+            sessionKeyIsValid: true
           },
           success: user => {
             if (user.statusCode === 200 && user.data) {

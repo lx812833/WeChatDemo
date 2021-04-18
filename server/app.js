@@ -9,6 +9,13 @@ const app = new koa()
 // 导入路由
 const router = require("./routes")
 
+// 连接数据库
+const { connect, initModels } = require("./database/init");
+; (async () => {
+    await connect()
+    initModels()
+})()
+
 app.use(logger())
 app.use(koaBody())
 
