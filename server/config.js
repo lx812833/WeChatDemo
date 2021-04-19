@@ -8,7 +8,7 @@ const config = {
         environment: "dev",
         database: "vantmall",
         username: "root",
-        password: "lx812833",
+        password: "123456",
         host: "localhost", // 主机名
         port: 3306, // 端口号
         define: {

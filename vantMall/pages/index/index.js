@@ -16,14 +16,13 @@ Page({
         let userInfo = wx.getStorageSync('userInfo')
         if(token) {
           this.setData({
-            // hasUserInfo: true,
-            hasUserInfo: false,
+            hasUserInfo: true,
             userInfo
           })
           getApp().globalData.token = token
           getApp().globalData.userInfo = userInfo
         }
-      },
+      }
     })
   },
   getUserProfile(e) {
@@ -68,17 +67,6 @@ Page({
           }
         })
       }
-    })
-  },
-  // 底部弹出层
-  handleShowPopup() {
-    this.setData({
-      isShow: true
-    })
-  },
-  handleClosePopup() {
-    this.setData({
-      isShow: false
     })
   }
 })
