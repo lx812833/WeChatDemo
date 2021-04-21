@@ -4,6 +4,7 @@ const WXBizDataCrypt = require('../libs/WXBizDataCrypt')
 
 const { jwtSecret, minProgram } = require("../config")
 const User = require("../database/model/User")
+const SessionKey = require("../database/model/SessionKey")
 
 class UserControl {
     /**
@@ -31,14 +32,25 @@ class UserControl {
 
         // 查询当前登录用户是否创建，否则创建
         let user = await User.findOne({ where: { openId: decryptedUserInfo.openId } })
-        console.log("user", user)
         if (!user) {
             let createUser = await User.create(decryptedUserInfo)
-            console.log("createRes", createUser)
-            // if (createUser) {
-            //     user = createUser.dataValues
-            // }
+            if (createUser) {
+                user = createUser.dataValues
+            }
         }
+        let sessionKey = ""
+        let sessionKeyRecord = await SessionKey.findOne({ where: { uid: user.id } })
+        console.log("sessionKeyRecord", sessionKeyRecord)
+
+        // if (sessionKeyRecord) {
+        //     await SessionKey.update({ sessionKey: sessionKeyRecord })
+        // } else {
+        //     let sessionKeyCreateRes = await SessionKey.create({
+        //         uid: user.id,
+        //         sessionKey: sessionKey
+        //     })
+        // }
+        
         ctx.status = 200
         ctx.body = {
             code: 200,

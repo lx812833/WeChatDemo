@@ -16,6 +16,9 @@ const glob = require("glob")
 // 引入所有定义的model
 exports.initModels = () => {
     glob.sync(resolve(__dirname, "./model/", "**/*.js")).forEach(require)
+    
+    // 同步数据库
+    sequelize.sync({ alter: true })
 }
 
 // 连接数据库
