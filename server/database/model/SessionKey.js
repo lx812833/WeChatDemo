@@ -17,7 +17,7 @@ module.exports = SessionKey.init({
         type: Sequelize.INTEGER(11),
         references: {
             model: User,
-            key: 'id',
+            key: 'id', // 设置uid为User里的一个外键
             deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
         },
         allowNull: false
