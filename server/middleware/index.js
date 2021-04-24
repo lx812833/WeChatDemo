@@ -42,19 +42,14 @@ module.exports = app => {
     app.use(session(CONFIG, app))
 
     // cookie
-    // app.use(async function (ctx, next) {
-    //     const n = ~~ctx.cookies.get("view") + 1
-    //     // cookie中设置了HttpOnly属性,那么通过js脚本将无法读取到cookie信息
-    //     ctx.cookies.set("view", n, { httpOnly: false })
-    //     await next()
-    // })
+    app.use(async function (ctx, next) {
+        const n = ~~ctx.cookies.get("view") + 1
+        // cookie中设置了HttpOnly属性,那么通过js脚本将无法读取到cookie信息
+        ctx.cookies.set("view", n, { httpOnly: false })
+        await next()
+    })
 
     // session
-    // app.use(async (ctx) => {
-    //     let n = ~~ctx.session.views;
-    //     ctx.session.views = n;
-    //     ctx.body = 'views' + n;
-    // })
 
     // 路由鉴权 以及验证token是否有效
     app.use(async (ctx, next) => {
