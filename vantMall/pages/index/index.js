@@ -3,6 +3,9 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUseGetUserProfile: false,
+    // 本地token与微信服务器上的session要分别对待
+    tokenIsValid: false,
+    sessionIsValid: false
   },
   onLoad() {
     if (wx.getUserProfile) {
@@ -14,10 +17,14 @@ Page({
       success: res => {
         let token = wx.getStorageSync('token')
         let userInfo = wx.getStorageSync('userInfo')
+        this.setData({
+          sessionIsValid: true
+        })
         if(token) {
           this.setData({
             hasUserInfo: true,
-            userInfo
+            userInfo,
+            tokenIsValid: true
           })
           getApp().globalData.token = token
           getApp().globalData.userInfo = userInfo
@@ -54,7 +61,7 @@ Page({
             code: res.code,
             encryptedData,
             iv,
-            sessionKeyIsValid: true
+            sessionKeyIsValid: this.data.sessionIsValid
           },
           success: user => {
             if (user.statusCode === 200 && user.data) {
@@ -63,7 +70,16 @@ Page({
               wx.setStorageSync('userInfo', user.data.data)
               getApp().globalData.token = authorizationToken
               getApp().globalData.userInfo = user.data.data
+              wx.showToast({
+                title: '登陆成功',
+              })
             }
+          },
+          fail: error => {
+            wx.showModal({
+              title: '登录失败',
+              content: '请退出小程序，清空记录并重试',
+            })
           }
         })
       }

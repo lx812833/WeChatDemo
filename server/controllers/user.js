@@ -14,43 +14,67 @@ class UserControl {
     async login(ctx) {
         const { code, encryptedData, iv, sessionKeyIsValid } = ctx.request.body
         const weixinAuth = new WeixinAuth(minProgram.appId, minProgram.appSecret)
-        const token = await weixinAuth.getAccessToken(code)
-        const { session_key, openid } = token.data
-        const pc = new WXBizDataCrypt(minProgram.appId, session_key)
 
+        let sessionKey = ""
+        let openId = ""
+        // 如果客户端有token， 解析token
+        if (sessionKeyIsValid) {
+            let token = ctx.request.header.authorization
+            token = token.split(' ')[1]
+            if (token) {
+                let payload = await jsonwebtoken.verify(token, jwtSecret)
+                if (payload && payload.sessionKey) {
+                    sessionKey = payload.sessionKey
+                    openId = payload.openId
+                }
+            }
+        }
+        // 如果从token中没有取到，则从服务器上取一次
+        if (!sessionKey) {
+            // 目前微信的 session_key, 有效期3天
+            const token = await weixinAuth.getAccessToken(code)
+            const { session_key, openid } = token.data
+            sessionKey = session_key
+            openId = openid
+        }
+
+        const pc = new WXBizDataCrypt(minProgram.appId, sessionKey)
         let decryptedUserInfo = pc.decryptData(encryptedData, iv)
 
-        let authorizationToken = jsonwebtoken.sign(
-            { name: decryptedUserInfo.nickName },
-            jwtSecret,
-            { expiresIn: '1d' }
-        )
-        Object.assign(decryptedUserInfo, {
-            authorizationToken,
-            openId: openid
-        })
-
         // 查询当前登录用户是否创建，否则创建
-        let user = await User.findOne({ where: { openId: decryptedUserInfo.openId } })
+        let user = await User.findOne({ where: { openId: openId } })
         if (!user) {
             let createUser = await User.create(decryptedUserInfo)
             if (createUser) {
                 user = createUser.dataValues
             }
         }
-        let sessionKey = ""
         let sessionKeyRecord = await SessionKey.findOne({ where: { uid: user.id } })
-        console.log("sessionKeyRecord", sessionKeyRecord)
+        if (sessionKeyRecord) {
+            await sessionKeyRecord.update({
+                sessionKey: sessionKey
+            })
+        } else {
+            let sessionKeyRecordCreateRes = await SessionKey.create({
+                uid: user.id,
+                sessionKey: sessionKey
+            })
+            sessionKeyRecord = sessionKeyRecordCreateRes.dataValues
+        }
 
-        // if (sessionKeyRecord) {
-        //     await SessionKey.update({ sessionKey: sessionKeyRecord })
-        // } else {
-        //     let sessionKeyCreateRes = await SessionKey.create({
-        //         uid: user.id,
-        //         sessionKey: sessionKey
-        //     })
-        // }
-        
+        let authorizationToken = jsonwebtoken.sign(
+            {
+                uid: user.id,
+                nickName: decryptedUserInfo.nickName,
+                avatarUrl: decryptedUserInfo.avatarUrl,
+                openId,
+                sessionKey
+            },
+            jwtSecret,
+            { expiresIn: '1d' }
+        )
+        Object.assign(decryptedUserInfo, { authorizationToken })
+
         ctx.status = 200
         ctx.body = {
             code: 200,
