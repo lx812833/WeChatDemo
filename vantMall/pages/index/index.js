@@ -48,7 +48,7 @@ Page({
           method: 'POST',
           header: {
             'content-type': 'application/json',
-            // 'Authorization': `Bearer ${token || ''}`
+            'Authorization': `Bearer ${getApp().globalData.token || ''}`
           },
           data: {
             code: res.code,

@@ -57,21 +57,21 @@ module.exports = app => {
     // })
 
     // 路由鉴权 以及验证token是否有效
-    app.use(async (ctx, next) => {
-        try {
-            await next()
-        } catch (error) {
-            if (error.status === 401) {
-                ctx.status = 401
-                ctx.body = "Protected resource"
-            } else {
-                throw error
-            }
-        }
-    })
+    // app.use(async (ctx, next) => {
+    //     try {
+    //         await next()
+    //     } catch (error) {
+    //         if (error.status === 401) {
+    //             ctx.status = 401
+    //             ctx.body = "Protected resource"
+    //         } else {
+    //             throw error
+    //         }
+    //     }
+    // })
 
-    // 若验证未通过，则404
-    app.use(koajwt({ secret: jwtSecret }).unless({
-        path: ['/users/login']
-    }))
+    // // 若验证未通过，则404
+    // app.use(koajwt({ secret: jwtSecret }).unless({
+    //     path: ['/users/login']
+    // }))
 }
