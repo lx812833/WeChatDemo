@@ -1,5 +1,6 @@
 const GoodsCategory = require("../database/model/GoodsCategory")
 const Goods = require("../database/model/Goods")
+const GoodsInfo = require("../database/model/GoodsInfo")
 
 class GoodsControl {
     /**
@@ -36,13 +37,22 @@ class GoodsControl {
             whereObj['category_id'] = Number(ctx.query.category_id)
         }
 
+        // 关联GoodsInfo查询（一对多）
+        Goods.hasMany(GoodsInfo, { foreignKey: 'goods_id', targetKey: 'id' })
+
         let goods = await Goods.findAll({
             where: whereObj,
             order: [
                 ['id', 'desc'] // 排序 desc 倒序排序
             ],
             limit: page_size,
-            offset: (page_index - 1) * page_size // 偏移量
+            offset: (page_index - 1) * page_size, // 偏移量
+            include: [{
+                model: GoodsInfo,
+                attributes: ['content', 'kind', 'goods_id'],
+                where: { 'kind': 0 }
+            }],
+            distinct: true
         })
 
         ctx.status = 200
