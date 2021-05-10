@@ -41,32 +41,22 @@ module.exports = app => {
     // 将 secure 改为false，在本地测试
     app.use(session(CONFIG, app))
 
-    // cookie
-    app.use(async function (ctx, next) {
-        const n = ~~ctx.cookies.get("view") + 1
-        // cookie中设置了HttpOnly属性,那么通过js脚本将无法读取到cookie信息
-        ctx.cookies.set("view", n, { httpOnly: false })
-        await next()
+    // 路由鉴权 以及验证token是否有效
+    app.use(async (ctx, next) => {
+        try {
+            await next()
+        } catch (error) {
+            if (error.status === 401) {
+                ctx.status = 401
+                ctx.body = "Protected resource"
+            } else {
+                throw error
+            }
+        }
     })
 
-    // session
-
-    // 路由鉴权 以及验证token是否有效
-    // app.use(async (ctx, next) => {
-    //     try {
-    //         await next()
-    //     } catch (error) {
-    //         if (error.status === 401) {
-    //             ctx.status = 401
-    //             ctx.body = "Protected resource"
-    //         } else {
-    //             throw error
-    //         }
-    //     }
-    // })
-
     // // 若验证未通过，则404
-    // app.use(koajwt({ secret: jwtSecret }).unless({
-    //     path: ['/users/login']
-    // }))
+    app.use(koajwt({ secret: jwtSecret }).unless({
+        path: ['/users/login']
+    }))
 }

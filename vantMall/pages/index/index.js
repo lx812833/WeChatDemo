@@ -84,5 +84,12 @@ Page({
         })
       }
     })
+  },
+
+  // 跳转
+  handleToGoods() {
+    wx.navigateTo({
+      url: '/pages/category/index',
+    })
   }
 })

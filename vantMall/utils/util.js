@@ -1,19 +1,41 @@
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
+import config from '../config'
 
-  return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
-}
+export const request = (options) => {
+  /**
+   * @param {object} data 传参
+   * @param {string} method 请求方法
+   * @param {string} url
+   * @param {object} etcs request函数的其他属性
+   */
+  const { data, method = 'get', url, etcs } = options
 
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : `0${n}`
-}
+  console.log("getApp().globalData.token", getApp().globalData.token)
 
-module.exports = {
-  formatTime
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `${config.serverPath}/${url}`,
+      method: method,
+      data: data,
+      header: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${getApp().globalData.token || ''}`
+      },
+      ...etcs,
+      success: res => {
+        if (res.data.code === 200) {
+          resolve(res.data.data)
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'error',
+            duration: 2000
+          })
+          reject()
+        }
+      },
+      fail: error => {
+        reject()
+      }
+    })
+  })
 }
