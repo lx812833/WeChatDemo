@@ -8,9 +8,6 @@ export const request = (options) => {
    * @param {object} etcs request函数的其他属性
    */
   const { data, method = 'get', url, etcs } = options
-
-  console.log("getApp().globalData.token", getApp().globalData.token)
-
   return new Promise((resolve, reject) => {
     wx.request({
       url: `${config.serverPath}/${url}`,

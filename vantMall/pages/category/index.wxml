@@ -2,6 +2,9 @@
   <block wx:for="{{vtabs}}" wx:key="title">
     <mp-vtabs-content tabIndex="{{index}}">
       <view class="vtabs-content-item">我是第{{index + 1}}项： {{item.title}}</view>
+      <view wx:for="{{goodsListMap[item.id]}}" wx:for-index="item.id" wx:for-item="res" wx:key="id">
+        <view>{{res.goods_name}}</view>
+      </view>
     </mp-vtabs-content>
   </block>
 </mp-vtabs>
