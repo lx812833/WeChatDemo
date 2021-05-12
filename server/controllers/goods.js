@@ -45,12 +45,12 @@ class GoodsControl {
             order: [
                 ['id', 'desc'] // 排序 desc 倒序排序
             ],
-            limit: page_size,
-            offset: (page_index - 1) * page_size, // 偏移量
-            include: [{
-                model: GoodsInfo,
-                attributes: ['content', 'kind', 'goods_id'],
-                where: { 'kind': 0 }
+            limit: page_size, // 前端分页组件传来的一页显示多少条
+            offset: (page_index - 1) * page_size, // 前端分页组件传来的起始偏移量
+            include: [{ // 关联查询
+                model: GoodsInfo, // 指定关联GoodsInfo表
+                attributes: ['content', 'kind', 'goods_id'], // 查询GoodsInfo表的content、kind，goods_id字段
+                // where: { 'kind': 0 }
             }],
             distinct: true
         })
