@@ -7,9 +7,19 @@ page {
 
 .vtabs-content-item {
   width: 100%;
-  /* height: 300px; */
   height: auto;
+  min-height: 200px;
   box-sizing: border-box;
   border-bottom: 1px solid #ccc;
-  padding-bottom: 20px;
+}
+
+.vtabs-content-title {
+  background: transparent;
+  text-align: center;
+  line-height: 50px;
+  background-color: #efefef;
+}
+
+.van-card_title {
+  padding-top: 10px;
 }

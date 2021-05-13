@@ -1,9 +1,16 @@
-<mp-vtabs vtabs="{{vtabs}}" activeTab="{{activeTab}}" bindtabclick="onTabCLick" bindchange="onChange">
+<mp-vtabs vtabs="{{vtabs}}" activeTab="{{activeTab}}" bindtabclick="onTabCLick" bindchange="onChange" id="vtabs">
   <block wx:for="{{vtabs}}" wx:key="title">
-    <mp-vtabs-content tabIndex="{{index}}">
-      <view class="vtabs-content-item">我是第{{index + 1}}项： {{item.title}}</view>
-      <view wx:for="{{goodsListMap[item.id]}}" wx:for-index="item.id" wx:for-item="res" wx:key="id">
-        <view>{{res.goods_name}}</view>
+    <mp-vtabs-content tabIndex="{{index}}" id="vtabs-content{{index}}">
+      <view class="vtabs-content-item">
+        <view class="vtabs-content-title">{{item.title}}</view>
+        <view wx:for="{{goodsListMap[item.id]}}" wx:for-index="item.id" wx:for-item="res" wx:key="id">
+          <van-card price="{{res.start_price}}" desc="{{res.goods_desc}}" title="{{res.goods_name}}"
+            thumb="{{ imageURL }}">
+            <view slot="footer">
+              <van-icon name="shopping-cart-o" size="24px" />
+            </view>
+          </van-card>
+        </view>
       </view>
     </mp-vtabs-content>
   </block>
