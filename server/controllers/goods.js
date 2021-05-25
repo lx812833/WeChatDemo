@@ -40,7 +40,7 @@ class GoodsControl {
         // 关联GoodsInfo查询（一对多）
         Goods.hasMany(GoodsInfo, { foreignKey: 'goods_id', targetKey: 'id' })
 
-        let goods = await Goods.findAll({
+        let goods = await Goods.findAndCountAll({
             where: whereObj,
             order: [
                 ['id', 'desc'] // 排序 desc 倒序排序
