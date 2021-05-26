@@ -1,4 +1,4 @@
-import { getCategories, getGoods } from '../../services/goods'
+import { getCategories, getGoods, detailGoods } from '../../services/goods'
 
 Page({
   data: {
@@ -83,6 +83,25 @@ Page({
       this.data.lastIndexForLoadMore = index
     }
   },
+
+  // 跳转商品详情
+  async onTapGoods({ currentTarget }) {
+    wx.showLoading({
+      title: 'Loading...',
+    })
+    let goodsId = currentTarget.dataset.id
+    let goodsDetail = await detailGoods(goodsId)
+    if (goodsDetail) {
+      wx.navigateTo({
+        url: `/pages/goods/index?goodsId=${goodsId}`,
+        success: res => {
+          res.eventChannel.emit('goodsData', { data: goodsDetail })
+        }
+      })
+    }
+    wx.hideLoading()
+  },
+
   onTabCLick(e) {
     const index = e.detail.index
     this.setData({ activeTab: index })

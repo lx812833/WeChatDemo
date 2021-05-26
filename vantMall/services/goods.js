@@ -16,3 +16,11 @@ export const getGoods = (params) => {
     method: 'get'
   })
 }
+
+// 根据id获取商品详情
+export const detailGoods = (id) => {
+  return request({
+    url: `goods/goods/${id}`,
+    method: 'get'
+  })
+}

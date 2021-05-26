@@ -62,6 +62,31 @@ class GoodsControl {
             data: goods
         }
     }
+
+    /**
+     * 获取商品详情
+     * @param {*} ctx
+     */
+    async detail(ctx) {
+        let goodsId = Number(ctx.params.id)
+        Goods.hasMany(GoodsInfo, { foreignKey: 'goods_id', targetKey: 'id' })
+        let goods = await Goods.findOne({
+            where: {
+                id: goodsId
+            },
+            include: [{
+                model: GoodsInfo,
+                attributes: ['content', 'kind', 'goods_id']
+            }]
+        })
+
+        ctx.status = 200
+        ctx.body = {
+            code: 200,
+            msg: 'ok',
+            data: goods
+        }
+    }
 }
 
 module.exports = new GoodsControl()
