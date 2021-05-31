@@ -9,18 +9,16 @@ Page({
     goodsImages: []
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     const { goodsId } = options
     this.data.goodsId = goodsId
     // 页面间通信
     this.getOpenerEventChannel().on('goodsData', res => {
-      let goodsImages = res.data.GoodsInfos.filter(item => item.kind === 0)
+      // let goodsImages = res.data.GoodsInfos.filter(item => item.kind === 0)
+      console.log("goodsImages", res)
       this.setData({
         goodsData: res.data,
-        goodsImages
+        goodsImages: []
       })
     })
   },
