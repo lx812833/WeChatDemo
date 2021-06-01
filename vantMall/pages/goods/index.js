@@ -14,11 +14,10 @@ Page({
     this.data.goodsId = goodsId
     // 页面间通信
     this.getOpenerEventChannel().on('goodsData', res => {
-      // let goodsImages = res.data.GoodsInfos.filter(item => item.kind === 0)
-      console.log("goodsImages", res)
+      let goodsImages = res.data.GoodsInfos.filter(item => item.kind === 0)
       this.setData({
         goodsData: res.data,
-        goodsImages: []
+        goodsImages
       })
     })
   },

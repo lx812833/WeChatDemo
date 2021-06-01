@@ -1,0 +1,18 @@
+/* 引入icon图标 */
+@font-face {
+  font-family: 'iconfont';
+  /* Project id 638417 */
+  src: url('//at.alicdn.com/t/font_638417_ocit7wv42os.woff2?t=1622559736436') format('woff2'),
+    url('//at.alicdn.com/t/font_638417_ocit7wv42os.woff?t=1622559736436') format('woff'),
+    url('//at.alicdn.com/t/font_638417_ocit7wv42os.ttf?t=1622559736436') format('truetype');
+}
+
+.iconfont {
+  font-family: 'iconfont';
+  font-size: 40rpx;
+}
+
+.icon-share::before {
+  content: '\e658';
+  color: #767A7B;
+}

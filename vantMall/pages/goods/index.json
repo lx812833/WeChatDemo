@@ -1,3 +1,9 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-image": "/miniprogram/miniprogram_npm/@vant/weapp/image/index",
+    "van-row": "/miniprogram/miniprogram_npm/@vant/weapp/row/index",
+    "van-col": "/miniprogram/miniprogram_npm/@vant/weapp/col/index",
+    "van-cell": "/miniprogram/miniprogram_npm/@vant/weapp/cell/index",
+    "van-cell-group": "/miniprogram/miniprogram_npm/@vant/weapp/cell-group/index"
+  }
 }

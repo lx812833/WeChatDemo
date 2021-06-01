@@ -1,1 +1,46 @@
-/* pages/goods/index.wxss */
+@import "/static/style/icon.wxss";
+
+.goods-container {
+  padding: 10px 15px 0;
+  font-family: '微软雅黑';
+  background-color: white;
+}
+
+.goods-info {
+  color: #C0A769;
+}
+
+.goods-name {
+  color: black;
+  font-size: 16px;
+}
+
+.goods-desc {
+  color: #939697;
+  font-size: 11px;
+}
+
+.goods-buy-desc .van-cell__title {
+  font-size: 13px;
+}
+
+.share {
+  font-size: 11px;
+  background-color: #F5F9FA;
+  color: #767A7B;
+  border-radius: 30px;
+  padding: 5px 10px;
+  margin-right: -27px;
+  width: 50px;
+  text-align: center;
+  float: right;
+}
+
+.price {
+  color: rgba(181, 154, 81, 1);
+  font-size: 18px;
+}
+
+.title {
+  font-size: 12px;
+}

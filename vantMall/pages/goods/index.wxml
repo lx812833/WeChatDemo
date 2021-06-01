@@ -1,2 +1,27 @@
-<!--pages/goods/index.wxml-->
-<text>pages/goods/index.wxml</text>
+<!-- 轮播图 -->
+<swiper indicator-dots autoplay circular style="height: 300px;">
+  <block wx:for="{{goodsImages}}" wx:key="*this">
+    <swiper-item>
+      <van-image lazy-load slot="loading" fit="cover" width="100%" height="300" src="{{item.content}}" />
+    </swiper-item>
+  </block>
+</swiper>
+<!-- 标题及价格 -->
+<view class="goods-container">
+  <view class="goods-info">
+    <text class="title">￥</text>
+    <text class="price">{{goodsData.start_price}}</text>
+  </view>
+  <van-row>
+    <van-col span="16">
+      <view class="goods-name">{{goodsData.goods_name}}</view>
+    </van-col>
+    <van-col span="8" style="text-align:right;">
+      <view class="iconfont icon-share share"> 分享</view>
+    </van-col>
+  </van-row>
+  <view class="goods-desc">{{goodsData.goods_desc}}</view>
+</view>
+<van-cell-group border="{{false}}">
+  <van-cell class="goods-buy-desc" title="全程护航，请放心购买" is-link />
+</van-cell-group>

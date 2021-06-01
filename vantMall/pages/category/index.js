@@ -90,6 +90,10 @@ Page({
       title: 'Loading...',
     })
     let goodsId = currentTarget.dataset.id
+    // 由于数据不足，goodsId超过10取10内随机数
+    if (goodsId > 10) {
+      goodsId = Math.ceil(Math.random() * 10)
+    }
     let goodsDetail = await detailGoods(goodsId)
     if (goodsDetail) {
       wx.navigateTo({
