@@ -16,19 +16,6 @@ Page({
           text: '中文Hello&nbsp;World!'
         },
         {
-          name: 'span',
-          attrs: {
-            style: 'color: green;'
-          },
-          children: [{
-            type: 'text',
-            text: 'message'
-          }]
-        },
-        {
-          name: 'br',
-        },
-        {
           name: 'br',
         },
         {
@@ -51,9 +38,29 @@ Page({
           name: 'img',
           attrs: {
             src: 'https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2853553659,1775735885&fm=26&gp=0.jpg',
-            style: 'width:100%;'
+            style: 'width:100%;',
+            class: 'img'
+          }
+        },
+        {
+          name: 'img',
+          attrs: {
+            src: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=111713540,615806613&fm=26&gp=0.jpg',
+            // style:'width:100%;'
+            style: 'width: 100%; font-size: 0; display: block'  // 去除图片间的间隙
           }
         }]
+    },
+    {
+      name: 'div',
+      attrs: {
+        class: 'div_class',
+        style: 'line-height: 60px; color: red;'
+      },
+      children: [{
+        type: 'text',
+        text: `You never know what you're gonna get.'`
+      }]
     }],
     urls: [], // nodes中图片节点
   },
@@ -113,7 +120,9 @@ Page({
       })
       return urls
     }
-    this.data.urls = findImageUrl(this.data.nodes)
+    this.setData({
+      urls: findImageUrl(this.data.nodes)
+    })
     console.log("this.data.urls", this.data.urls)
   },
   /**
