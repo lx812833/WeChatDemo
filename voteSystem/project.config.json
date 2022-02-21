@@ -10,7 +10,7 @@
     "minified": true,
     "newFeature": true,
     "coverView": true,
-    "nodeModules": false,
+    "nodeModules": true,
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
@@ -38,7 +38,7 @@
   },
   "appid": "wx945d022da1eeff40",
   "projectname": "voteSystem",
-  "libVersion": "2.14.1",
+  "libVersion": "2.22.0",
   "condition": {
     "search": {
       "list": []
